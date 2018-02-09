@@ -1,0 +1,43 @@
+{
+      "id" : "network:1",
+      "class" : "network",
+      "claimed" : true,
+      "description" : "Wireless interface",
+      "physid" : "2",
+      "businfo" : "usb@1:1.2",
+      "logicalname" : "wlan0",
+      "serial" : "e8:4e:06:34:ff:db",
+      "configuration" : {
+        "broadcast" : "yes",
+        "driver" : "rtl8192cu",
+        "multicast" : "yes",
+        "wireless" : "unassociated"
+      },
+      "capabilities" : {
+        "ethernet" : true,
+        "physical" : "Physical interface",
+        "wireless" : "Wireless-LAN"
+      }
+    },
+    {
+      "id" : "network:2",
+      "class" : "network",
+      "claimed" : true,
+      "description" : "Wireless interface",
+      "physid" : "3",
+      "logicalname" : "wlan1",
+      "serial" : "b8:27:eb:7e:11:87",
+      "configuration" : {
+        "broadcast" : "yes",
+        "driver" : "brcmfmac",
+        "driverversion" : "7.45.41.46",
+        "firmware" : "01-f8a78378",
+        "multicast" : "yes",
+        "wireless" : "IEEE 802.11"
+      },
+      "capabilities" : {
+        "ethernet" : true,
+        "physical" : "Physical interface",
+        "wireless" : "Wireless-LAN"
+      }
+    }
