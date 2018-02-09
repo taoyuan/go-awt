@@ -24,8 +24,8 @@ func stubLshw(file string) *gostub.Stubs  {
 }
 
 func TestLshw(t *testing.T) {
-	stubs := stubLshw("")
-	defer stubs.Reset()
+	stub := stubLshw("")
+	defer stub.Reset()
 
 	var hw, err = Lshw("")
 	if err != nil {
@@ -36,8 +36,8 @@ func TestLshw(t *testing.T) {
 }
 
 func TestResolveIface(t *testing.T) {
-	stubs := stubLshw("test/fixtures/lshw-network.txt")
-	defer stubs.Reset()
+	stub := stubLshw("test/fixtures/lshw-network.txt")
+	defer stub.Reset()
 	convey.Convey("Should resolve wlan without calculate", t, func() {
 		result, _ := ResolveIface("wlanxyz")
 		assert.Equal(t, result, "")

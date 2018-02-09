@@ -19,6 +19,7 @@ var Exec = func(cmd string, args ...string) (string, error) {
 	output, err := command.StdoutPipe()
 	if err := command.Start(); err != nil {
 		log.Fatal(err)
+		return "", err
 	}
 
 	buf := new(bytes.Buffer)

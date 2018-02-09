@@ -100,7 +100,7 @@ func ResolveIface(iface string) (string, error) {
 		}
 	}
 
-	if iface == "" && len(wlans) > 0 {
+	if ifaceToUse == "default" && len(wlans) > 0 {
 		return wlans[0].Logicalname, nil
 	}
 
