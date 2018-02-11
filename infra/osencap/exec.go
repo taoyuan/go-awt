@@ -1,35 +1,28 @@
 package osencap
 
 import (
-	"fmt"
 	"os/exec"
-	"go-awt/infra"
 	"log"
-	"bytes"
+	"io/ioutil"
 )
 
-var Exec = func(cmd string, args ...string) (string, error) {
-	cmdpath, err := exec.LookPath(cmd)
+var Exec = func(command string, args ...string) (string, error) {
+	cmdpath, err := exec.LookPath(command)
 	if err != nil {
-		fmt.Errorf("exec.LookPath err: %v, cmd: %s", err, cmd)
-		return "", infra.ErrExecLookPathFailed
+		log.Fatalf("exec.LookPath err: %v, cmd: %s", err, command)
 	}
 
-	command := exec.Command(cmdpath, args...)
-	output, err := command.StdoutPipe()
-	if err := command.Start(); err != nil {
+	cmd := exec.Command(cmdpath, args...)
+	stdout, err := cmd.StdoutPipe()
+	if err := cmd.Start(); err != nil {
 		log.Fatal(err)
-		return "", err
 	}
 
-	buf := new(bytes.Buffer)
-	buf.ReadFrom(output)
-	return buf.String(), nil
-	//
-	//if err != nil {
-	//	fmt.Errorf("exec.Command.CombinedOutput err: %v, cmd: %s", err, cmd)
-	//	return "", infra.ErrExecCombinedOutputFailed
-	//}
-	////fmt.Println("CMD[", cmdpath, "]ARGS[", args, "]OUT[", string(output), "]")
-	//return string(output), nil
+	out, _ := ioutil.ReadAll(stdout)
+
+	if err := cmd.Wait(); err != nil {
+		log.Fatal(err)
+	}
+
+	return string(out), nil
 }
