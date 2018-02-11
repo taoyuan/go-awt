@@ -7,6 +7,7 @@ import (
 	"errors"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type Hardware struct {
@@ -26,7 +27,7 @@ type Hardware struct {
 	Configuration map[string]interface{} `json:"configuration"`
 	Capabilities  map[string]interface{} `json:"capabilities"`
 	Children      []Hardware             `json:"children"`
-	Tags		  []string
+	Tags          []string
 }
 
 func Lshw(class string) (*Hardware, error) {
@@ -47,7 +48,7 @@ func Lshw(class string) (*Hardware, error) {
 	return &hw, nil
 }
 
-func LsWlans() ([]Hardware, error)  {
+func LsWlans() ([]Hardware, error) {
 	root, err := Lshw("network")
 	if err != nil {
 		return nil, err
@@ -65,7 +66,7 @@ func LsWlans() ([]Hardware, error)  {
 			if hw.Businfo == "" {
 				hw.Tags = append(hw.Tags, "default")
 				hw.Tags = append(hw.Tags, "onboard")
-				hw.Tags = append(hw.Tags, "onboard" + strconv.Itoa(seqOnboard))
+				hw.Tags = append(hw.Tags, "onboard"+strconv.Itoa(seqOnboard))
 				seqOnboard = seqOnboard + 1
 			} else {
 				hw.Tags = append(hw.Tags, hw.Businfo)
@@ -105,4 +106,34 @@ func ResolveIface(iface string) (string, error) {
 	}
 
 	return "", errors.New("iface \"" + iface + "\" can not be found")
+}
+
+var Ip = func (args ...string) (string, error) {
+	return osencap.Exec("ip", args...)
+}
+
+func Up(iface string) error {
+	_, err := Ip("link", "set", iface, "up")
+	return err
+}
+
+func Down(iface string) error {
+	_, err := Ip("link", "set", iface, "down")
+	return err
+}
+
+func Reset(iface string, delay int) error {
+	if err := Down(iface); err != nil {
+		return err
+	}
+
+	if delay > 0 {
+		time.Sleep(time.Duration(delay) * time.Millisecond)
+	}
+
+	if err := Up(iface); err != nil {
+		return err
+	}
+
+	return nil
 }
