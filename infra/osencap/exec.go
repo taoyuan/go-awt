@@ -2,25 +2,34 @@ package osencap
 
 import (
 	"os/exec"
-	"bytes"
-	"fmt"
-	"go-awt/infra"
+	"io/ioutil"
 )
 
 var Exec = func(command string, args ...string) (string, error) {
 	cmdpath, err := exec.LookPath(command)
 	if err != nil {
-		fmt.Errorf("exec.LookPath err: %v, cmd: %s", err, command)
-		return "", infra.ErrExecLookPathFailed
+		return "", err
 	}
 
 	cmd := exec.Command(cmdpath, args...)
-	output, err := cmd.StdoutPipe()
+	stdout, err := cmd.StdoutPipe()
+	if err != nil {
+		return "", err
+	}
+	defer stdout.Close()
+
 	if err := cmd.Start(); err != nil {
-		fmt.Errorf("cmd.Start err: %v, cmd: %s", err, command)
+		return "", err
 	}
 
-	buf := new(bytes.Buffer)
-	buf.ReadFrom(output)
-	return buf.String(), nil
+	out, err := ioutil.ReadAll(stdout)
+	if err != nil {
+		return "", err
+	}
+
+	if err := cmd.Wait(); err != nil {
+		return "", err
+	}
+
+	return string(out), nil
 }
