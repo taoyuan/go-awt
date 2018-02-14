@@ -11,14 +11,14 @@ var Exec = func(command string, args ...string) (string, error) {
 		return "", err
 	}
 
-	cmd := exec.Command(cmdpath, args...)
-	stdout, err := cmd.StdoutPipe()
+	c := exec.Command(cmdpath, args...)
+	stdout, err := c.StdoutPipe()
 	if err != nil {
 		return "", err
 	}
 	defer stdout.Close()
 
-	if err := cmd.Start(); err != nil {
+	if err := c.Start(); err != nil {
 		return "", err
 	}
 
@@ -27,7 +27,7 @@ var Exec = func(command string, args ...string) (string, error) {
 		return "", err
 	}
 
-	if err := cmd.Wait(); err != nil {
+	if err := c.Wait(); err != nil {
 		return "", err
 	}
 

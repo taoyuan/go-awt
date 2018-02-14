@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cat << EOF
+WARN: Your adapter does not fully support AP virtual interface, enabling --no-virt
+ERROR: 'eth1' is not an interface
+EOF
+exit 1

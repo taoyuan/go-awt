@@ -24,10 +24,9 @@
 #   go-tests = true
 #   unused-packages = true
 
-
-[[constraint]]
-  name = "github.com/magiconair/properties"
-  version = "1.7.4"
+[prune]
+  go-tests = true
+  unused-packages = true
 
 [[constraint]]
   branch = "master"
@@ -37,10 +36,10 @@
   name = "github.com/smartystreets/goconvey"
   version = "1.6.3"
 
-[prune]
-  go-tests = true
-  unused-packages = true
-
 [[constraint]]
   name = "github.com/thoas/go-funk"
   version = "0.2.0"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/go-cmd/cmd"

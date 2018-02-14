@@ -2,6 +2,18 @@
 
 
 [[projects]]
+  name = "github.com/davecgh/go-spew"
+  packages = ["spew"]
+  revision = "346938d642f2ec3594ed81d874461961cd0faa76"
+  version = "v1.1.0"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/go-cmd/cmd"
+  packages = ["."]
+  revision = "a2f18106a9e069b001ad1136e2c89723d25301f4"
+
+[[projects]]
   branch = "master"
   name = "github.com/gopherjs/gopherjs"
   packages = ["js"]
@@ -14,10 +26,10 @@
   version = "v4.2.1"
 
 [[projects]]
-  name = "github.com/magiconair/properties"
-  packages = ["assert"]
-  revision = "d419a98cdbed11a922bf76f257b7c4be79b50e73"
-  version = "v1.7.4"
+  name = "github.com/pmezard/go-difflib"
+  packages = ["difflib"]
+  revision = "792786c7400a136282c1664665ae0a8db921c6c2"
+  version = "v1.0.0"
 
 [[projects]]
   branch = "master"
@@ -46,6 +58,12 @@
   version = "1.6.3"
 
 [[projects]]
+  name = "github.com/stretchr/testify"
+  packages = ["assert"]
+  revision = "12b6f73e6084dad08a7c6e575284b177ecafbc71"
+  version = "v1.2.1"
+
+[[projects]]
   name = "github.com/thoas/go-funk"
   packages = ["."]
   revision = "14304e8530de7dbb909c8305591b3a8370dd9dbb"
@@ -54,6 +72,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "43b4af279683ff88f64fe9f5171f24db81a8b994b7ba76a0422bc703b578f232"
+  inputs-digest = "cdd761b63dad101695d6b6cf367a5e8c433bd59d34578c2b0af0ce35127a59b2"
   solver-name = "gps-cdcl"
   solver-version = 1

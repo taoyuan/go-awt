@@ -1,0 +1,52 @@
+#!/bin/bash
+
+_run() {
+    cat << EOF
+WARN: Your adapter does not fully support AP virtual interface, enabling --no-virt
+WARN: If AP doesn't work, please read: howto/realtek.md
+Config dir: /tmp/create_ap.wlan0.conf.Tg1VJRNW
+PID: 3233
+Network Manager found, set wlan0 as unmanaged device... DONE
+Sharing Internet using method: nat
+hostapd command-line interface: hostapd_cli -p /tmp/create_ap.wlan0.conf.Tg1VJRNW/hostapd_ctrl
+Configuration file: /tmp/create_ap.wlan0.conf.Tg1VJRNW/hostapd.conf
+Using interface wlan0 with hwaddr e8:4e:06:34:ff:db and ssid "MyAccessPoint"
+wlan0: interface state UNINITIALIZED->ENABLED
+wlan0: AP-ENABLED
+EOF
+}
+
+_wait() {
+    while :
+    do
+       sleep 10 &
+       wait $!
+    done
+}
+
+_disable() {
+    cat << EOF
+wlan0: interface state ENABLED->DISABLED
+wlan0: AP-DISABLED
+nl80211: deinit ifname=wlan0 disabled_11b_rates=0
+EOF
+}
+
+_cleanup() {
+    echo
+    echo -n "Doing cleanup.. "
+    sleep 1 &
+    echo "done"
+    exit
+}
+
+clean_exit() {
+    _disable
+    _cleanup
+}
+
+trap "clean_exit" SIGINT SIGUSR1
+trap "clean_exit" SIGTERM SIGUSR1
+
+_run
+_wait
