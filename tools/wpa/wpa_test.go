@@ -88,7 +88,7 @@ func TestStatus(t *testing.T) {
 		stub := stubWpaWithData(WPA_CLI_STATUS_SILENCE)
 		defer stub.Reset()
 
-		st, err := Status("wlan0")
+		st, err := GetStatus("wlan0")
 		if err != nil {
 			t.Error(err)
 		}
@@ -99,11 +99,11 @@ func TestStatus(t *testing.T) {
 		stub := stubWpaWithData(WPA_CLI_STATUS_COMPLETED)
 		defer stub.Reset()
 
-		st, err := Status("wlan0")
+		st, err := GetStatus("wlan0")
 		if err != nil {
 			t.Error(err)
 		}
-		assert.Equal(t, &status{
+		assert.Equal(t, &Status{
 			Bssid:            "2c:f5:d3:02:ea:d9",
 			Frequency:        2412,
 			Mode:             "station",
@@ -124,11 +124,11 @@ func TestStatus(t *testing.T) {
 		stub := stubWpaWithData(WPA_CLI_STATUS_4WAY_HANDSHAKE)
 		defer stub.Reset()
 
-		st, err := Status("wlan0")
+		st, err := GetStatus("wlan0")
 		if err != nil {
 			t.Error(err)
 		}
-		assert.Equal(t, &status{
+		assert.Equal(t, &Status{
 			Bssid:            "2c:f5:d3:02:ea:d9",
 			Frequency:        2412,
 			Mode:             "station",
@@ -149,11 +149,11 @@ func TestStatus(t *testing.T) {
 		stub := stubWpaWithData(WPA_CLI_STATUS_SCANNING)
 		defer stub.Reset()
 
-		st, err := Status("wlan0")
+		st, err := GetStatus("wlan0")
 		if err != nil {
 			t.Error(err)
 		}
-		assert.Equal(t, &status{
+		assert.Equal(t, &Status{
 			P2pDeviceAddress: "e4:28:9c:a8:53:72",
 			WpaState: "SCANNING",
 			Ip: "10.34.141.168",
@@ -169,7 +169,7 @@ func TestStatus(t *testing.T) {
 		})
 		defer stub.Reset()
 
-		st, err2 := Status("wlan0")
+		st, err2 := GetStatus("wlan0")
 		assert.Nil(t, st)
 		assert.Equal(t, err, err2)
 	})
@@ -570,7 +570,7 @@ func TestScanResults(t *testing.T) {
 
 		result, err := ScanResults("wlan0")
 		assert.Nil(t, err)
-		assert.Equal(t, []*network{
+		assert.Equal(t, []*Network{
 			{
 				Bssid:       "2c:f5:d3:02:ea:d9",
 				Frequency:   2472,

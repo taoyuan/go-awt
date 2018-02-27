@@ -1,9 +1,9 @@
 package ifconfig
 
 import (
-	"go-awt/infra/osencap"
+	"github.com/taoyuan/go-awt/infra/osencap"
 	"strings"
-	"go-awt/infra/re"
+	"github.com/taoyuan/go-awt/infra/re"
 	"regexp"
 )
 

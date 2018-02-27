@@ -3,7 +3,7 @@ package iu
 import (
 	"testing"
 	"github.com/prashantv/gostub"
-	"go-awt/infra/osencap"
+	"github.com/taoyuan/go-awt/infra/osencap"
 	"io/ioutil"
 	"github.com/smartystreets/goconvey/convey"
 	"github.com/stretchr/testify/assert"

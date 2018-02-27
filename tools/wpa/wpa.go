@@ -1,15 +1,15 @@
 package wpa
 
 import (
-	"go-awt/infra/osencap"
+	"github.com/taoyuan/go-awt/infra/osencap"
 	"strings"
-	"go-awt/infra/re"
+	"github.com/taoyuan/go-awt/infra/re"
 	"strconv"
 	"github.com/thoas/go-funk"
-	"go-awt/infra/str"
+	"github.com/taoyuan/go-awt/infra/str"
 )
 
-type status struct {
+type Status struct {
 	Id               int
 	Ssid             string
 	Bssid            string
@@ -25,7 +25,7 @@ type status struct {
 	Uuid             string
 }
 
-type network struct {
+type Network struct {
 	Bssid       string
 	Frequency   int
 	SignalLevel int
@@ -37,9 +37,9 @@ var Wpa = func(args ...string) (string, error) {
 	return osencap.Exec("wpa_cli", args...)
 }
 
-func parseStatusBlock(block string) *status {
+func parseStatusBlock(block string) *Status {
 	v := false
-	st := status{}
+	st := Status{}
 	var matches []string
 
 	if matches = re.Match(`bssid=([A-Fa-f0-9:]{17})`, block); len(matches) > 1 {
@@ -113,15 +113,15 @@ func parseStatusBlock(block string) *status {
 	return nil
 }
 
-func parseScanResultsBlock(block string) []*network {
-	var answer []*network
+func parseScanResultsBlock(block string) []*Network {
+	var answer []*Network
 	var matches []string
 
 	lines := strings.Split(block, "\n")
 	lines = funk.Map(lines, func (line string) string { return line + "\n"} ).([]string)
 	for _, entry := range lines {
 		v := false
-		n := network{}
+		n := Network{}
 
 		if matches = re.Match(`([A-Fa-f0-9:]{17})\t`, entry); len(matches) > 1 {
 			n.Bssid = strings.ToLower(matches[1])
@@ -170,7 +170,7 @@ func parseCommandBlock(block string) string {
 	return ""
 }
 
-func Status(iface string) (*status, error) {
+func GetStatus(iface string) (*Status, error) {
 	out, err := Wpa("-i", iface, "status")
 	if err != nil {
 		return nil, err
@@ -258,7 +258,7 @@ func Scan(iface string) (string, error) {
 	return parseCommandBlock(strings.Trim(out, " \r\n")), nil
 }
 
-func ScanResults(iface string) ([]*network, error) {
+func ScanResults(iface string) ([]*Network, error) {
 	out, err := Wpa("-i", iface, "scan_results")
 	if err != nil {
 		return nil, err

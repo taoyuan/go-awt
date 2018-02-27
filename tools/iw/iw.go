@@ -1,14 +1,14 @@
 package iw
 
 import (
-	"go-awt/infra/osencap"
-	"go-awt/utils/iu"
+	"github.com/taoyuan/go-awt/infra/osencap"
+	"github.com/taoyuan/go-awt/tools/iu"
 	"regexp"
 	"sort"
 	"github.com/thoas/go-funk"
 	"strings"
 	"strconv"
-	"go-awt/infra/re"
+	"github.com/taoyuan/go-awt/infra/re"
 )
 
 type Cell struct {

@@ -1,7 +1,7 @@
 package iu
 
 import (
-	"go-awt/infra/osencap"
+	"github.com/taoyuan/go-awt/infra/osencap"
 	"encoding/json"
 	"github.com/thoas/go-funk"
 	"errors"
@@ -76,6 +76,14 @@ func LsWlans() ([]Hardware, error) {
 		}
 	}
 	return answer, nil
+}
+
+func TryResolveIface(iface string) string {
+	ifaceResolved, err := ResolveIface(iface)
+	if err != nil {
+		return ifaceResolved
+	}
+	return iface
 }
 
 func ResolveIface(iface string) (string, error) {
